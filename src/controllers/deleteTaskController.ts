@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { deleteTaskInteractor } from '../interactors/deleteTaskInteractor';
 import { deleteTaskPersistence } from '../persistence/in-memory/deleteTaskPersistence';
 import { funcExec } from '../utilities/funcExec';
-import { InMemoryError } from '../persistence/in-memory/InMemoryError';
+import { PersistenceError } from '../persistence/PersistenceError';
 
 export const deleteTaskController = (
   req: Request<{ id: string }>,
@@ -17,7 +17,7 @@ export const deleteTaskController = (
   );
 
   if (error) {
-    if (error instanceof InMemoryError) {
+    if (error instanceof PersistenceError) {
       res.status(404).json({
         status: 404,
         message: `Could not delete task with id ${id} because it does not exist!`,

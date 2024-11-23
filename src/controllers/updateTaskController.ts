@@ -5,7 +5,7 @@ import { updateTaskInteractor } from '../interactors/updateTaskInteractor';
 import { updateTaskPersistence } from '../persistence/in-memory/updateTaskPersistence';
 import { IValidationItem } from '../entities/IValidator';
 import { ValidationError } from '../entities/ValidationError';
-import { InMemoryError } from '../persistence/in-memory/InMemoryError';
+import { PersistenceError } from '../persistence/PersistenceError';
 
 export const updateTaskController = (
   req: Request<
@@ -30,7 +30,7 @@ export const updateTaskController = (
   );
 
   if (!task) {
-    if (error instanceof InMemoryError) {
+    if (error instanceof PersistenceError) {
       res.status(404).json({
         status: 404,
         message: `Could not update task with id ${id} because it does not exist.`,
