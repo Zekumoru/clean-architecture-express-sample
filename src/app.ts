@@ -1,16 +1,15 @@
 import express from 'express';
 import cors from 'cors';
+import indexRouter from './routes/indexRouter';
+import tasksRouter from './routes/tasksRouter';
 
 const app = express();
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.json({
-    status: 200,
-    message: 'App is running.',
-  });
-});
+app.use('/', indexRouter);
+app.use('/tasks', tasksRouter);
 
 app.listen(3000, () => {
   console.log(`Server is listening on port 3000`);
